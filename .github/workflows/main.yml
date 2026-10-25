@@ -19,7 +19,8 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' `
             -Name "UserAuthentication" -Value 1 -Force
 
-          netsh advfirewall firewall delete rule name="RDP-Tailscale"
+          Get-NetFirewallRule -DisplayName "RDP-Tailscale" -ErrorAction SilentlyContinue |
+    Remove-NetFirewallRule -ErrorAction SilentlyContinue
 
           New-NetFirewallRule `
             -DisplayName "RDP-Tailscale" `
